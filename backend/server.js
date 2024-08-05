@@ -17,6 +17,11 @@ app.get('/', (req, res) => {
   res.send('Hello World');
 });
 
+
+app.get('/login', (req, res) => {
+    res.send('Login');
+}); 
+
 app.listen(8001, () => {
 
     console.log('Server is running on port 8001');
