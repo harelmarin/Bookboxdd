@@ -18,10 +18,10 @@ body {
     justify-content: center;
     align-items: center;
     width: 100%;
-    background-color: rgb(130, 178, 221);
+    background-color: rgb(66, 149, 222);
 }
 .container-header {
-    margin-top: 2vh;
+    margin-top: 5vh;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -68,7 +68,7 @@ body {
 .search-icon {
     position: absolute;
     right: 455px;
-    top: 8.5%;
+    top: 11.7%;
     transform: translateY(-50%); 
     width: 20px; 
     height: 20px; 
@@ -165,7 +165,40 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 
+  .container-begin-home {
+    margin-top: 5vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .container-begin-home h2 {
+    font-family: 'Bold';
+    font-size: 30px;
+    margin-top: 1vh;
+  }
+
+  .container-begin-home button {
+    margin-top: 3vh;
+    width: 200px;
+    height: 60px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #FEFEFE;
+    color: rgb(130, 178, 221);
+    background-color: #FEFEFE;
+    border: 4px solid rgb(130, 178, 221);
+    font-size: 20px;
+    font-family: 'Bold';
+  }
+
+  .container-begin-home button:hover {
+    background-color: rgb(130, 178, 221);
+    color: #FEFEFE;
+  }
+
   .container-home-book {
+    margin-top: 5vh;
     display: flex;
     justify-content: space-around;
     flex-direction: row; 
@@ -177,12 +210,18 @@ body {
         height: 250px;
         border-radius: 5px;
         cursor: pointer;
+        position: relative;
     }
 
 .container-home-book h3 {
     font-family: 'Bold';
+    font-size: 16px;
+}
+
+.container-home-book p {
+    margin-top: 5px;
     font-size: 15px;
-    cursor: pointer;
+    font-family: 'Regular';
 }
 
 
@@ -192,8 +231,35 @@ body {
     flex-direction: column;
     width: 150px;
     height: auto;
-    background-color: aqua
+    position: relative;
+    cursor: pointer;
+    border-radius: 5px;
 }
+.book-item:hover {
+  border: 4px solid rgb(130, 178, 221);
+}
+.book-item:hover img {
+    opacity: 0.2;
+
+}
+.book-item:hover .book-info {
+    display: block;
+}
+
+
+.book-info {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 150px;
+    height: 100%;
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 10px
+}
+
   
 
 

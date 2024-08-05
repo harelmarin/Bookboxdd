@@ -37,6 +37,11 @@ function Home() {
 
   return (
     <div className='container-home'>
+      <div className='container-begin-home'>
+     <h2>Track <span className='blue'>books</span> you've read</h2>
+      <h2>Save those you want to read</h2>
+      <button className='button-begin'>Get started</button>
+      </div>
       <div className='container-home-book'>
         {books.length ? (
           books.map(book => (
@@ -48,8 +53,13 @@ function Home() {
                   className='book-cover'
                 />
               )}
+              <div className='book-info'>
                <h3>{book.volumeInfo.title}</h3>
                <p>{book.volumeInfo.authors?.join(', ')}</p>
+               {book.volumeInfo.pageCount && (
+              <p>{book.volumeInfo.pageCount} Pages</p>
+              )}
+               </div>
             </div>
           ))
         ) : (
