@@ -1,4 +1,4 @@
-# Student CRUD Application
+# Google Books Application
 
 Application built with React for the frontend and Node.js with Express and MySQL for the backend. This project is intended as a practice exercise to demonstrate basic API utilisations with Database and Sign in with FireBase
 ---
@@ -34,12 +34,12 @@ Application built with React for the frontend and Node.js with Express and MySQL
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/harelmarin/CrudApp.git
+   git clone hhttps://github.com/harelmarin/Bookboxdd.git
    cd /backend
    npm install 
    ```
 
-   Configure the MySQL Database named 'crud-app'
+   Configure the MySQL Database named ''
    Copy the file '.env.example' to '.env' and fill in appropriate values
 
 ---
