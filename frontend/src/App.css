@@ -13,7 +13,6 @@
     src: url(../src/assets/font/Century\ Gothic\ Std\ Regular.otf);
 }
 body {
-    font-family: 'Regular', sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -58,10 +57,12 @@ body {
     width: 30vw;
     height: 25px;
     padding: 5px;
+    padding-left: 10px;
     border-radius: 5px;
     border: 0.5px solid black;
     font-size: 15px;
     cursor: pointer;
+    font-family: 'Regular';
    
   }
 
@@ -157,12 +158,13 @@ body {
     align-items: center;
     flex-direction: column;
     width: 70vw;
-    height: 70vh;
+    height: 100%;
     background-color: #FEFEFE;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
     padding: 2vw;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding-bottom: 10vh;
   }
 
   .container-begin-home {
@@ -197,8 +199,17 @@ body {
     color: #FEFEFE;
   }
 
+  .container-title {
+   width: 98%;
+   margin-top: 10vh;
+   
+  }
+  .title {
+    font-family: 'Bold';
+    font-size: 25px;
+  }
   .container-home-book {
-    margin-top: 5vh;
+    margin-top: 1vh;
     display: flex;
     justify-content: space-around;
     flex-direction: row; 
@@ -206,16 +217,18 @@ body {
 }
 
 .container-home-book img {
-        width: 150px;
-        height: 250px;
+        width: 180px;
+        height: 280px;
         border-radius: 5px;
         cursor: pointer;
         position: relative;
+        transition: 0.5s;
     }
+
 
 .container-home-book h3 {
     font-family: 'Bold';
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .container-home-book p {
@@ -229,14 +242,14 @@ body {
     display: flex;
     align-items: center;
     flex-direction: column;
-    width: 150px;
+    width: 180px;
     height: auto;
     position: relative;
     cursor: pointer;
     border-radius: 5px;
 }
 .book-item:hover {
-  border: 4px solid rgb(130, 178, 221);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 .book-item:hover img {
     opacity: 0.2;
@@ -252,7 +265,6 @@ body {
     align-items: center;
     flex-direction: column;
     width: 150px;
-    height: 100%;
     display: none;
     position: absolute;
     top: 0;

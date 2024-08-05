@@ -6,6 +6,7 @@ import { AuthProvider } from './firebase/authContext';
 import Home from './components/home';
 import Login from './components/login';
 import Header from './components/header';
+import Search from './components/search';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
 
         <Route path="/" element={<Home />} />
         <Route path='/login' element={<Login />} />
+        <Route path='/search' element={<Search />} />
       </Routes>
       </BrowserRouter>
       
