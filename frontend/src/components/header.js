@@ -2,19 +2,40 @@
 import React, { useContext } from 'react';
 import '../App.css';
 import { AuthContext } from '../firebase/authContext'; // Importer le contexte
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 import logIcon from '../assets/img/human.svg';
 import searchIcon from '../assets/img/search.svg';
 
 
 function Header() {
+
+  const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
+
+  const handleSearch = (event) => {
+    event.preventDefault(); 
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`); 
+    }
+}
+
   const { user, handleGoogleSignIn, handleSignOut } = useContext(AuthContext); // Utiliser le contexte
 
   return (
     <div className='container-header'>
         
       <a href='/'> <h1> Book<span className="blue">box</span> </h1></a> 
-      <input type="text" placeholder="Search..." className='search-input' />
+      <form onSubmit={handleSearch} className='search-form'>
+        <input
+          type="text"
+          placeholder="Search..."
+          className='search-input'
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)} 
+        />
+        </form>
       <img src={searchIcon} alt="Search Icon" className='search-icon' />
 
       {user ? (

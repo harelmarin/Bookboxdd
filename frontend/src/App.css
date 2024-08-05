@@ -274,4 +274,55 @@ body {
 
   
 
+/* SEARCH */
+
+.container-search {
+  display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 70vw;
+    height: 100%;
+    background-color: #FEFEFE;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 2vw;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding-bottom: 10vh;
+}
+
+
+.container-search-book {
+  margin-top: 1vh;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row; 
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.container-search-book img {
+  width: 180px;
+  height: 280px;
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+  transition: 0.5s;
+}
+
+.container-search-book h3 {
+  font-family: 'Bold';
+  font-size: 18px;
+}
+
+.container-search-book p {
+  margin-top: 5px;
+  font-size: 15px;
+  font-family: 'Regular';
+}
+
+.top {
+  margin-top: 3vh;
+}
+
+
 
