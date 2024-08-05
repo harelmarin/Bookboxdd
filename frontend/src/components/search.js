@@ -35,7 +35,7 @@ useEffect(() => {
         params: {
         q: query,
         key: GOOGLE_BOOKS_API_KEY,
-        maxResults: 20,
+        maxResults: 50,
         }
     })
     .then(response => {
