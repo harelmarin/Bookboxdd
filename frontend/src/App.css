@@ -154,7 +154,6 @@ body {
 
   .container-home {
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
     width: 70vw;
@@ -166,6 +165,35 @@ body {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 
+  .container-home-book {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row; 
+    width: 100%;
+}
+
+.container-home-book img {
+        width: 150px;
+        height: 250px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+.container-home-book h3 {
+    font-family: 'Bold';
+    font-size: 15px;
+    cursor: pointer;
+}
+
+
+.book-item {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    width: 150px;
+    height: auto;
+    background-color: aqua
+}
   
 
 

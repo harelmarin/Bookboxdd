@@ -2,24 +2,61 @@
 import React, { useContext } from 'react';
 import '../App.css';
 import { AuthContext } from '../firebase/authContext'; // Importer le contexte
+import { useState } from 'react';
+import { useEffect } from 'react';
+
+import axios from 'axios';
+
+const GOOGLE_BOOKS_API_URL = 'https://www.googleapis.com/books/v1/volumes';
+
 
 function Home() {
   const { user} = useContext(AuthContext); // Utiliser le contexte
 
+  const [books, setBooks] = useState([]);
+  const [query, setQuery] = useState('');
+  const [category, setCategory] = useState('');
+
+  const GOOGLE_BOOKS_API_KEY = process.env.REACT_APP_GOOGLE_BOOKS_API_KEY;
+
+  useEffect(() => {
+    axios.get(GOOGLE_BOOKS_API_URL, {
+      params: {
+        q: 'cycle des robots isaac asimov',
+        key: GOOGLE_BOOKS_API_KEY,
+        maxResults: 5,
+      }
+    })
+    .then(response => {
+      setBooks(response.data.items || []);
+    })
+    .catch(error => {
+      console.error('Error fetching books:', error);
+    });
+  }, [GOOGLE_BOOKS_API_KEY]);
+
   return (
     <div className='container-home'>
-
-      <a href='/login'> LOGIN </a>
-      {user ? (
-        <div>
-          <h2>Welcome, {user.displayName}</h2>
-          <p>Email: {user.email}</p>
-          {user.photoURL && <img src={user.photoURL} alt="Profile" className="profile-picture" />}
-          
-        </div>
-      ) : (
-        <div>Please log in to view your profile.</div>
-      )}
+      <div className='container-home-book'>
+        {books.length ? (
+          books.map(book => (
+            <div key={book.id} className='book-item'>
+              {book.volumeInfo.imageLinks && (
+                <img 
+                  src={book.volumeInfo.imageLinks.thumbnail} 
+                  alt={book.volumeInfo.title} 
+                  className='book-cover'
+                />
+              )}
+               <h3>{book.volumeInfo.title}</h3>
+               <p>{book.volumeInfo.authors?.join(', ')}</p>
+            </div>
+          ))
+        ) : (
+          <p>No books found</p>
+        )}
+      </div>
+     
     </div>
   );
 }
