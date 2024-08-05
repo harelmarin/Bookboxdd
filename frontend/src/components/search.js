@@ -14,6 +14,8 @@ function Search() {
     const query = new URLSearchParams(location.search).get('q'); // Obtient la query de l'URL
 
     const [booksSearch, setBooksSearch] = useState([]);
+    const [loading, setLoading] = useState(false);
+
 
 
     const GOOGLE_BOOKS_API_KEY = process.env.REACT_APP_GOOGLE_BOOKS_API_KEY;
@@ -28,6 +30,7 @@ function Search() {
   // Effectuer la recherche pour search 
 
 useEffect(() => {
+    setLoading(true);
     axios.get(GOOGLE_BOOKS_API_URL, {
         params: {
         q: query,
@@ -37,9 +40,11 @@ useEffect(() => {
     })
     .then(response => {
         setBooksSearch(response.data.items || []);
+        setLoading(false);
     })
     .catch(error => {
         console.error('Error fetching books:', error);
+        setLoading(false);
     });
     }, [query, GOOGLE_BOOKS_API_KEY]);
 
@@ -50,6 +55,9 @@ useEffect(() => {
         <div className='container-title'>
         <h3 className='title'>Search Results for "{query}"</h3>
         </div>
+        {loading ? (
+        <div className='loading'>Loading...</div>
+      ) : (
         <div className='container-search-book'>
         {booksSearch.length ? 
             (booksSearch.map(book => (
@@ -74,9 +82,7 @@ useEffect(() => {
           <p>No books found</p>
         )}
       </div>
-
-
-        
+        )}
     </div>
   );
 }

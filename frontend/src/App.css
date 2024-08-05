@@ -247,6 +247,7 @@ body {
     position: relative;
     cursor: pointer;
     border-radius: 5px;
+    overflow: hidden;
 }
 .book-item:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -322,6 +323,13 @@ body {
 
 .top {
   margin-top: 3vh;
+}
+
+.loading {
+  font-size: 20px;
+  font-family: 'Bold';
+  text-align: center;
+  margin-top: 20px;
 }
 
 
