@@ -18,6 +18,7 @@ function Book() {
     const [bookDetails, setBooksdetails] = useState([]);
     const [booksAuthor, setBooksAuthor] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [wishlistStatus, setWishlistStatus] = useState('');
 
 
 
@@ -70,6 +71,21 @@ function Book() {
   }, [bookDetails?.volumeInfo?.authors, GOOGLE_BOOKS_API_KEY]);
 
 
+// Fonction pour ajouter un livre aux favoris
+const addBookToWishlist = async (bookId) => {
+    try {
+        const userId = user.id;
+        await axios.post('http://localhost:8001/api/wishlist', {
+            user_id: userId,
+            book_id: bookId
+        });
+        alert('Book added to wishlist');
+    } catch (error) {
+        console.error('Error adding book to wishlist:', error);
+        alert('Failed to add book to wishlist');
+    }
+};
+
 
 
   return (
@@ -87,6 +103,14 @@ function Book() {
                 className='book-cover-details'
               />
             )}
+            <button className='button-wishlist'onClick={() => addBookToWishlist(bookDetails.id)}
+>
+                            Add to wishlist
+                        </button>
+                        {wishlistStatus === 'success' && <p>Book added to wishlist!</p>}
+                        {wishlistStatus === 'error' && <p>Failed to add book to wishlist.</p>}
+
+
             <div className='book-details-info'>
               <h2>{bookDetails.volumeInfo?.title}</h2>
               <h3>

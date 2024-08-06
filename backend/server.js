@@ -25,6 +25,7 @@ app.get('/', (req, res) => {
   res.send('Hello World');
 });
 
+
 app.post('/api/users', (req, res) => {
     const { id, email, name } = req.body;
 
@@ -32,17 +33,77 @@ app.post('/api/users', (req, res) => {
         return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    const sql = 'INSERT INTO users (firebase_id, email, name) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE email = VALUES(email), name = VALUES(name)';
-    const values = [id, email, name];
+    const checkUserSql = 'SELECT user_id FROM users WHERE firebase_id = ?';
+    db.query(checkUserSql, [id], (checkErr, checkResult) => {
+        if (checkErr) {
+            console.error('Error checking user:', checkErr);
+            return res.status(500).json({ error: 'Database error' });
+        }
+
+        if (checkResult.length > 0) {
+            // Utilisateur existe déjà, renvoyer l'ID
+            const existingUserId = checkResult[0].user_id;
+            res.status(200).json({ user_id: existingUserId });
+        } else {
+            // Vérifier si l'email existe déjà
+            const checkEmailSql = 'SELECT user_id FROM users WHERE email = ?';
+            db.query(checkEmailSql, [email], (emailCheckErr, emailCheckResult) => {
+                if (emailCheckErr) {
+                    console.error('Error checking email:', emailCheckErr);
+                    return res.status(500).json({ error: 'Database error' });
+                }
+
+                if (emailCheckResult.length > 0) {
+                    // Email existe déjà, renvoyer l'ID
+                    const existingEmailUserId = emailCheckResult[0].user_id;
+                    res.status(200).json({ user_id: existingEmailUserId });
+                } else {
+                    // Insérer un nouvel utilisateur
+                    const insertSql = 'INSERT INTO users (firebase_id, email, name) VALUES (?, ?, ?)';
+                    const values = [id, email, name];
+
+                    db.query(insertSql, values, (insertErr, insertResult) => {
+                        if (insertErr) {
+                            if (insertErr.code === 'ER_DUP_ENTRY') {
+                                // Email a été inséré par un autre processus
+                                return res.status(409).json({ error: 'Email already exists' });
+                            }
+                            console.error('Error inserting user:', insertErr);
+                            return res.status(500).json({ error: 'Database error' });
+                        }
+
+                        // Renvoyer l'ID du nouvel utilisateur
+                        res.status(200).json({ user_id: insertResult.insertId });
+                    });
+                }
+            });
+        }
+    });
+});
+
+
+
+
+
+app.post('/api/wishlist', (req, res) => {
+    const { user_id, book_id } = req.body;
+
+    if (!user_id || !book_id) {
+        return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    const sql = 'INSERT IGNORE INTO wishlist (user_id, book_id) VALUES (?, ?)';
+    const values = [user_id, book_id];
 
     db.query(sql, values, (err, result) => {
         if (err) {
-            console.error('Error inserting user:', err);
+            console.error('Error adding book to wishlist:', err);
             return res.status(500).json({ error: 'Database error' });
         }
-        result.status(200).json({ message: 'User created or updated successfully' });
+        res.status(200).json({ message: 'Book added to wishlist successfully' });
     });
 });
+
 
 app.listen(8001, () => {
 

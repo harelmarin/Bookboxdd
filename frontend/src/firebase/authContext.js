@@ -1,23 +1,40 @@
-// src/context/AuthContext.js
 import React, { createContext, useState, useEffect } from 'react';
 import { onAuthStateChanged, signOut as firebaseSignOut, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../firebase/firebaseConfig';
 import axios from 'axios';
-// Création du contexte
+
 export const AuthContext = createContext();
 
-
-// Fournisseur du contexte
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [userId, setUserId] = useState(null); // Pour stocker l'`user_id`
 
   useEffect(() => {
-    // Observer les changements d'état d'authentification
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
+      if (user) {
+        user.getIdToken().then(async (token) => {
+          try {
+            const response = await axios.post('http://localhost:8001/api/users', {
+              id: token,
+              email: user.email,
+              name: user.displayName
+            });
+
+            // Afficher l'ID utilisateur pour le débogage
+            console.log('Response from server:', response.data);
+
+            setUser(user);
+            setUserId(response.data.user_id); // Stocker l'`user_id`
+          } catch (error) {
+            console.error('Error creating or updating user:', error);
+          }
+        });
+      } else {
+        setUser(null);
+        setUserId(null);
+      }
     });
 
-    // Nettoyer l'abonnement lors du démontage du composant
     return () => unsubscribe();
   }, []);
 
@@ -26,19 +43,21 @@ export const AuthProvider = ({ children }) => {
     try {
       const result = await signInWithPopup(auth, provider);
       const user = result.user;
-  
+
       if (user) {
-        // Obtenir le token Firebase
         const token = await user.getIdToken();
-  
-        // Envoyer les informations de l'utilisateur à votre backend
-        await axios.post('http://localhost:8001/api/users', {
+
+        const response = await axios.post('http://localhost:8001/api/users', {
           id: token,
           email: user.email,
           name: user.displayName
         });
-  
-        setUser(user); // Mettez à jour l'état utilisateur
+
+        // Afficher l'ID utilisateur pour le débogage
+        console.log('Response from server:', response.data);
+
+        setUser(user);
+        setUserId(response.data.user_id); // Stocker l'`user_id`
       } else {
         console.error('User is null after sign in');
       }
@@ -50,14 +69,15 @@ export const AuthProvider = ({ children }) => {
   const handleSignOut = async () => {
     try {
       await firebaseSignOut(auth);
-      setUser(null); // Réinitialiser l'état utilisateur
+      setUser(null);
+      setUserId(null); // Réinitialiser l'`user_id`
     } catch (error) {
       console.error('Error signing out:', error);
     }
   };
 
   return (
-    <AuthContext.Provider value={{ user, handleGoogleSignIn, handleSignOut }}>
+    <AuthContext.Provider value={{ user, userId, handleGoogleSignIn, handleSignOut }}>
       {children}
     </AuthContext.Provider>
   );

@@ -6,13 +6,13 @@ import { useState } from 'react';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
+
 import axios from 'axios';
 
 const GOOGLE_BOOKS_API_URL = 'https://www.googleapis.com/books/v1/volumes';
 
 
 function Home() {
-  const { user} = useContext(AuthContext); // Utiliser le contexte
 
   
   const [booksCycle, setBooksCycle] = useState([]);
