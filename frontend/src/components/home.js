@@ -4,6 +4,7 @@ import '../App.css';
 import { AuthContext } from '../firebase/authContext'; // Importer le contexte
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 import axios from 'axios';
 
@@ -78,6 +79,7 @@ function Home() {
     });
   });
 
+
   return (
     <div className='container-home'>
       <div className='container-begin-home'>
@@ -91,7 +93,7 @@ function Home() {
       <div className='container-home-book'>
         {booksCycle.length ? (
           booksCycle.map(book => (
-            <div key={book.id} className='book-item'>
+            <Link to={`/book/${book.id}`} key={book.id} className='book-item'>
               {book.volumeInfo.imageLinks && (
                 <img 
                   src={book.volumeInfo.imageLinks.thumbnail} 
@@ -106,7 +108,9 @@ function Home() {
               <p>{book.volumeInfo.pageCount} Pages</p>
               )}
                </div>
-            </div>
+               
+            </Link>
+           
           ))
         ) : (
           <p>No books found</p>
