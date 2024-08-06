@@ -2,8 +2,10 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { onAuthStateChanged, signOut as firebaseSignOut, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../firebase/firebaseConfig';
+import axios from 'axios';
 // Création du contexte
 export const AuthContext = createContext();
+
 
 // Fournisseur du contexte
 export const AuthProvider = ({ children }) => {
@@ -23,7 +25,23 @@ export const AuthProvider = ({ children }) => {
     const provider = new GoogleAuthProvider();
     try {
       const result = await signInWithPopup(auth, provider);
-      setUser(result.user);
+      const user = result.user;
+  
+      if (user) {
+        // Obtenir le token Firebase
+        const token = await user.getIdToken();
+  
+        // Envoyer les informations de l'utilisateur à votre backend
+        await axios.post('http://localhost:8001/api/users', {
+          id: token,
+          email: user.email,
+          name: user.displayName
+        });
+  
+        setUser(user); // Mettez à jour l'état utilisateur
+      } else {
+        console.error('User is null after sign in');
+      }
     } catch (error) {
       console.error('Error signing in with Google:', error);
     }

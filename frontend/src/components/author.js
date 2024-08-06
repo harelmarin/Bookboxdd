@@ -56,7 +56,7 @@ function Author() {
       <div className='container-search-book'>
         {booksAuthor.length ? (
           booksAuthor.map(book => (
-            <Link to={`/book/${book.id}`} key={book.id} className='book-item'>
+            <Link to={`/book/${book.id}`} key={book.id} className='book-item top'>
               {book.volumeInfo.imageLinks && (
                 <img 
                   src={book.volumeInfo.imageLinks.thumbnail} 
