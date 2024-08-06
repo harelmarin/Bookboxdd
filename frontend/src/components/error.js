@@ -10,13 +10,6 @@ function Error() {
     <div className='container-home'>
         <h4 className='error'> Page not found </h4>
     </div>
-
-
-
-    
-
-    
-
   );
 }
 

@@ -84,22 +84,31 @@ app.post('/api/users', (req, res) => {
 
 
 
-
 app.post('/api/wishlist', (req, res) => {
-    const { user_id, book_id } = req.body;
+    const { user_id, book_id, book_name, book_pages, book_author, book_image, book_description } = req.body;
 
     if (!user_id || !book_id) {
         return res.status(400).json({ error: 'Missing required fields' });
     }
 
-    const sql = 'INSERT IGNORE INTO wishlist (user_id, book_id) VALUES (?, ?)';
-    const values = [user_id, book_id];
+    const sql = `
+        INSERT INTO wishlist (user_id, book_id, book_name, book_pages, book_author, book_image, book_description)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+        ON DUPLICATE KEY UPDATE
+            book_name = VALUES(book_name),
+            book_pages = VALUES(book_pages),
+            book_author = VALUES(book_author),
+            book_image = VALUES(book_image),
+            book_description = VALUES(book_description)
+    `;
+    const values = [user_id, book_id, book_name, book_pages, book_author, book_image, book_description];
 
     db.query(sql, values, (err, result) => {
         if (err) {
             console.error('Error adding book to wishlist:', err);
             return res.status(500).json({ error: 'Database error' });
         }
+        console.log('Insert result:', result);
         res.status(200).json({ message: 'Book added to wishlist successfully' });
     });
 });

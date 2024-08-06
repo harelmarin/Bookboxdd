@@ -2,7 +2,7 @@
 import React, { useContext } from 'react';
 import '../App.css';
 import { AuthContext } from '../firebase/authContext'; // Importer le contexte
-import { useLocation } from 'react-router-dom';
+
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
@@ -26,7 +26,7 @@ function Book() {
     const GOOGLE_BOOKS_API_URL = 'https://www.googleapis.com/books/v1/volumes';
 
     
-  const { user } = useContext(AuthContext); // Utiliser le contexte
+  const { userId } = useContext(AuthContext); // Utiliser le contexte
 
 
   // RECHERCHE PAR ID DU LIVRE
@@ -74,11 +74,16 @@ function Book() {
 // Fonction pour ajouter un livre aux favoris
 const addBookToWishlist = async (bookId) => {
     try {
-        const userId = user.id;
-        await axios.post('http://localhost:8001/api/wishlist', {
+        const response = await axios.post('http://localhost:8001/api/wishlist', {
             user_id: userId,
-            book_id: bookId
+            book_id: bookId,
+            book_name: bookDetails.volumeInfo.title,
+            book_pages: bookDetails.volumeInfo.pageCount,
+            book_author: bookDetails.volumeInfo.authors?.join(', '),
+            book_image: bookDetails.volumeInfo.imageLinks.thumbnail,
+            book_description: bookDetails.volumeInfo.description
         });
+        console.log('Response:', response.data);
         alert('Book added to wishlist');
     } catch (error) {
         console.error('Error adding book to wishlist:', error);
