@@ -8,6 +8,7 @@ import Header from './components/header';
 import Search from './components/search';
 import Book from './components/book';
 import Author from './components/author';
+import Error from './components/error';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path='/search' element={<Search />} />
         <Route path='/book/:id' element={<Book />} />
         <Route path='/author/:id' element={<Author />} />
+        <Route path='*' element={<Error />} />
       </Routes>
       </BrowserRouter>
       

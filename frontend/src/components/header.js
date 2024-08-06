@@ -14,6 +14,8 @@ function Header() {
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
 
+  
+
   const handleSearch = (event) => {
     event.preventDefault(); 
     if (searchQuery.trim()) {
@@ -21,7 +23,8 @@ function Header() {
     }
 }
 
-  const { user, handleGoogleSignIn, handleSignOut } = useContext(AuthContext); // Utiliser le contexte
+  const { user, userId, handleGoogleSignIn, handleSignOut } = useContext(AuthContext); // Utiliser le contexte
+  console.log(userId);
 
   return (
     <div className='container-header'>
