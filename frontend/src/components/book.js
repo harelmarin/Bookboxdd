@@ -67,7 +67,7 @@ function Book() {
       console.error('Error fetching books:', error);
       setLoading(false);
     });
-  }, [GOOGLE_BOOKS_API_KEY]);
+  }, [bookDetails?.volumeInfo?.authors, GOOGLE_BOOKS_API_KEY]);
 
 
 

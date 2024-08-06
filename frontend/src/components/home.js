@@ -123,7 +123,7 @@ function Home() {
       <div className='container-home-book'>
         {booksMelanie.length ? (
           booksMelanie.map(book => (
-            <div key={book.id} className='book-item'>
+            <Link to={`/book/${book.id}`} key={book.id} className='book-item'>
               {book.volumeInfo.imageLinks && (
                 <img 
                   src={book.volumeInfo.imageLinks.thumbnail} 
@@ -138,7 +138,7 @@ function Home() {
               <p>{book.volumeInfo.pageCount} Pages</p>
               )}
                </div>
-            </div>
+            </Link>
           ))
         ) : (
           <p>No books found</p>
@@ -151,7 +151,7 @@ function Home() {
       <div className='container-home-book'>
         {booksJeff.length ? (
           booksJeff.map(book => (
-            <div key={book.id} className='book-item'>
+            <Link to={`/book/${book.id}`} key={book.id} className='book-item'>
               {book.volumeInfo.imageLinks && (
                 <img 
                   src={book.volumeInfo.imageLinks.thumbnail} 
@@ -166,7 +166,7 @@ function Home() {
               <p>{book.volumeInfo.pageCount} Pages</p>
               )}
                </div>
-            </div>
+            </Link>
           ))
         ) : (
           <p>No books found</p>

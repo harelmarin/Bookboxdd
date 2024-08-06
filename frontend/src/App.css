@@ -327,6 +327,10 @@ body {
   font-family: 'Regular';
 }
 
+.container-search-book a {
+  text-decoration: none;
+  color: #000;
+}
 .top {
   margin-top: 3vh;
 }

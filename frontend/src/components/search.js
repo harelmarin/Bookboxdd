@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 
 function Search() {
@@ -61,7 +62,7 @@ useEffect(() => {
         <div className='container-search-book'>
         {booksSearch.length ? 
             (booksSearch.map(book => (
-            <div key={book.id} className='book-item top'>
+              <Link to={`/book/${book.id}`} key={book.id} className='book-item top'>
               {book.volumeInfo.imageLinks && (
                 <img 
                   src={book.volumeInfo.imageLinks.thumbnail} 
@@ -76,7 +77,7 @@ useEffect(() => {
               <p>{book.volumeInfo.pageCount} Pages</p>
               )}
                </div>
-            </div>
+            </Link>
           ))
         ) : (
           <p>No books found</p>
