@@ -72,8 +72,6 @@ function Book() {
 
 
 
-
-
   return (
     <div className='container-details'>
       {loading ? (
@@ -91,7 +89,13 @@ function Book() {
             )}
             <div className='book-details-info'>
               <h2>{bookDetails.volumeInfo?.title}</h2>
-            <h3>{bookDetails.volumeInfo?.authors?.join(', ')}</h3>
+              <h3>
+                  {bookDetails.volumeInfo?.authors?.map((author, index) => (
+                    <Link key={index} to={`/author/${author}`} className='author-link'>
+                      {author}
+                    </Link>
+                  ))}
+                </h3>
             <p>{bookDetails.volumeInfo?.pageCount} Pages</p>
             <p>{bookDetails.volumeInfo?.description}</p>
           </div>

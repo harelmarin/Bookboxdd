@@ -399,3 +399,17 @@ body {
   margin-top: 1vh;
 }
 
+.book-details-info a {
+  text-decoration: none;
+  color: #000;
+  border-bottom: 2px solid #000;
+}
+
+/* AUTHOR */
+
+.title-author {
+  margin-top: 3vh;
+  margin-bottom: 1vh;
+  font-size: 30px;
+  font-family: 'Bold';
+}

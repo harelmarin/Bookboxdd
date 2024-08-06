@@ -8,6 +8,7 @@ import Login from './components/login';
 import Header from './components/header';
 import Search from './components/search';
 import Book from './components/book';
+import Author from './components/author';
 
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
         <Route path='/login' element={<Login />} />
         <Route path='/search' element={<Search />} />
         <Route path='/book/:id' element={<Book />} />
+        <Route path='/author/:id' element={<Author />} />
       </Routes>
       </BrowserRouter>
       
