@@ -9,6 +9,9 @@ import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
+import wish from '../assets/img/wish.svg';
+
+
 
 function Book() {
 
@@ -100,6 +103,7 @@ const addBookToWishlist = async (bookId) => {
       ) : (
         bookDetails ? (
           <div className='book-details'>
+            <div className='book-img-button'>
           
             {bookDetails.volumeInfo?.imageLinks && (
               <img 
@@ -108,12 +112,16 @@ const addBookToWishlist = async (bookId) => {
                 className='book-cover-details'
               />
             )}
-            <button className='button-wishlist'onClick={() => addBookToWishlist(bookDetails.id)}
->
-                            Add to wishlist
+
+           <button className='button-wishlist'onClick={() => addBookToWishlist(bookDetails.id)}>
+                            <img className='img-wishlist'src={wish} alt='Add wishlist'/>
+                            <div className='tooltip'>Want to read</div>
                         </button>
                         {wishlistStatus === 'success' && <p>Book added to wishlist!</p>}
                         {wishlistStatus === 'error' && <p>Failed to add book to wishlist.</p>}
+                   
+
+            </div>
 
 
             <div className='book-details-info'>
@@ -161,13 +169,6 @@ const addBookToWishlist = async (bookId) => {
               )}
             </div>
     </div>
-
-
-
-    
-
-    
-
   );
 }
 

@@ -368,7 +368,7 @@ body {
   margin-bottom: 5vh;
 }
 
-.book-details img {
+.book-cover-details {
   width: 200px;
   height: 350px;
   border-radius: 5px;
@@ -403,6 +403,71 @@ body {
   text-decoration: none;
   color: #000;
   border-bottom: 2px solid #000;
+}
+
+.book-img-button {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+}
+
+
+.button-wishlist {
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  position: relative; /* Nécessaire pour positionner le tooltip */
+}
+
+.img-wishlist {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  opacity: 0.8;
+  transform: 0.5s;
+  transform: scale(0.95);
+}
+
+.img-wishlist:hover {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.tooltip {
+  visibility: hidden;
+  width: 120px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%; /* Positionne le tooltip au-dessus de l'élément */
+  left: 50%;
+  margin-left: -60px; /* Centre le tooltip horizontalement */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip::after {
+  content: " ";
+  position: absolute;
+  top: 100%; /* Positionne la flèche en bas du tooltip */
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #333 transparent transparent transparent;
+}
+
+.button-wishlist:hover .tooltip {
+  visibility: visible;
+  opacity: 1;
 }
 
 /* AUTHOR */
