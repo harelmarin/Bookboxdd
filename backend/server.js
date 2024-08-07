@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mysql = require('mysql');
+const admin = require('firebase-admin');
 
 require ('dotenv').config();
 
@@ -25,6 +26,25 @@ app.get('/', (req, res) => {
   res.send('Hello World');
 });
 
+
+
+// Middleware pour vérifier les jetons Firebase
+const authenticate = async (req, res, next) => {
+    const idToken = req.headers.authorization?.split('Bearer ')[1];
+    if (!idToken) {
+      return res.status(401).send('Unauthorized');
+    }
+  
+    try {
+      const decodedToken = await admin.auth().verifyIdToken(idToken);
+      req.user = decodedToken; // Stocker les informations de l'utilisateur décodé dans la requête
+      next();
+    } catch (error) {
+      console.error('Error verifying token:', error);
+      res.status(401).send('Unauthorized');
+    }
+  };
+  
 
 app.post('/api/users', (req, res) => {
     const { id, email, name } = req.body;
@@ -113,7 +133,7 @@ app.post('/api/wishlist', (req, res) => {
     });
 });
 
-app.get ('/dashboard/:id'), (req, res) => {
+app.get('/dashboard', authenticate, (req, res) => {
     const { user_id } = req.params;
 
     if (!user_id) {
@@ -129,6 +149,7 @@ app.get ('/dashboard/:id'), (req, res) => {
         res.status(200).json(result);
     });
 }
+);
 
 
 app.listen(8001, () => {

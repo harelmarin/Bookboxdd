@@ -10,6 +10,7 @@ import Book from './components/book';
 import Author from './components/author';
 import Error from './components/error';
 import Dashboard from './components/dashboard';
+import ProtectedRoute from './components/protected';
 
 
 function App() {
@@ -25,7 +26,11 @@ function App() {
         <Route path='/book/:id' element={<Book />} />
         <Route path='/author/:id' element={<Author />} />
         <Route path='*' element={<Error />} />
-        <Route path='/dashboard/:userId' element={<Dashboard />} />
+
+     
+        <Route path='/dashboard/:userId'  element={ <ProtectedRoute>  {<Dashboard />}    </ProtectedRoute> } />
+     
+
       </Routes>
       </BrowserRouter>
       
