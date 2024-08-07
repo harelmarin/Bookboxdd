@@ -161,6 +161,28 @@ app.get('/dashboard/:id', authenticate, (req, res) => {
 }
 );
 
+app.delete('/delete/:id/:bookId', authenticate, (req, res) => {
+    const { id, bookId } = req.params;
+    console.log('Deleting bookId:', bookId, 'for userId:', id);
+
+    if (!id|| !bookId) {
+        return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    // Assurez-vous que le livre est bien associé à l'utilisateur avant de le supprimer
+    const sql = 'DELETE FROM wishlist WHERE user_id = ? AND book_id = ?';
+    db.query(sql, [id, bookId], (err, result) => {
+        if (err) {
+            console.error('Error deleting book:', err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'Book not found in wishlist for this user' });
+        }
+        res.status(200).json({ message: 'Book deleted successfully' });
+    });
+});
+
 
 app.listen(8001, () => {
 

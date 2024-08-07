@@ -41,6 +41,24 @@ function Dashboard() {
         }
     }, [id, user]);
 
+
+    const handleDeleteBookFromWish = async (bookId) => {
+        try {
+            const token = await user.getIdToken();
+            console.log('Sending request to delete book with ID:', bookId, 'for userId:', id);
+            const response = await axios.delete(`http://localhost:8001/delete/${id}/${bookId}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                }
+            });
+    
+            // Mettre à jour la wishlist après la suppression
+            setWishlist(wishlist.filter(book => book.book_id !== bookId));
+            console.log('Book deleted successfully', response.data);
+        } catch (error) {
+            console.error('Error deleting book:', error.response?.data || error.message);
+        }
+    };
     return (
         <div className='container-search'>
             <div className='container-begin-home'>
@@ -57,18 +75,26 @@ function Dashboard() {
                 <div className='container-search-book'>
                     {wishlist.length ? (
                         wishlist.map((data, i) => (
-                            <Link to={`/book/${data.book_id}`} key={data.book_id} className='book-item top'>
+                            
+                         
                             <div key={i} className='book-item'>
+                                   <Link to={`/book/${data.book_id}`} key={data.book_id} className='book-item top'>
                                 <img src={data.book_image} alt={data.book_name} className='book-cover' />
                                 <div className='book-info'>
                                     <h3>{data.book_name}</h3>
                                     <p>{data.book_author}</p>
                                     {data.book_pages && (
                                         <p>{data.book_pages} Pages</p>
+                            
                                     )}
+                                  
+                                    
                                 </div>
+                                </Link>
+                                <button className='delete-button' onClick={() => handleDeleteBookFromWish(data.book_id)}> delete </button>
+                               
                             </div>
-                            </Link>
+                          
                         ))
                     ) : (
                         <p>No books in your wishlist</p>
