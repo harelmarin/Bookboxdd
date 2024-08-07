@@ -18,7 +18,7 @@ function Book() {
     const { id } = useParams();
 
 
-    const [bookDetails, setBooksdetails] = useState([]);
+    const [bookDetails, setBooksdetails] = useState([null]);
     const [booksAuthor, setBooksAuthor] = useState([]);
     const [loading, setLoading] = useState(false);
     const [wishlistStatus, setWishlistStatus] = useState('');
@@ -96,83 +96,78 @@ const addBookToWishlist = async (bookId) => {
 
 
 
-  return (
-    <div className='container-details'>
+return (
+  <div className='container-details'>
       {loading ? (
-        <div className='loading'>Loading...</div>
+          <div className='loading'>Loading...</div>
       ) : (
-        bookDetails ? (
-          <div className='book-details'>
-            <div className='book-img-button'>
-          
-            {bookDetails.volumeInfo?.imageLinks && (
-              <img 
-                src={bookDetails.volumeInfo.imageLinks.thumbnail} 
-                alt={bookDetails.volumeInfo.title} 
-                className='book-cover-details'
-              />
-            )}
-
-           <button className='button-wishlist'onClick={() => addBookToWishlist(bookDetails.id)}>
-                            <img className='img-wishlist'src={wish} alt='Add wishlist'/>
-                            <div className='tooltip'>Want to read</div>
-                        </button>
-                        {wishlistStatus === 'success' && <p>Book added to wishlist!</p>}
-                        {wishlistStatus === 'error' && <p>Failed to add book to wishlist.</p>}
-                   
-
-            </div>
-
-
-            <div className='book-details-info'>
-              <h2>{bookDetails.volumeInfo?.title}</h2>
-              <h3>
-                  {bookDetails.volumeInfo?.authors?.map((author, index) => (
-                    <Link key={index} to={`/author/${author}`} className='author-link'>
-                      {author}
-                    </Link>
-                  ))}
-                </h3>
-            <p>{bookDetails.volumeInfo?.pageCount} Pages</p>
-            <p>{bookDetails.volumeInfo?.description}</p>
-          </div>
-          </div>
-        ) : (
-          <div className='loading'>Book not found</div>
-        )
+          bookDetails ? (
+              <div className='book-details'>
+                  <div className='book-img-button'>
+                      {bookDetails.volumeInfo?.imageLinks && (
+                          <img 
+                              src={bookDetails.volumeInfo.imageLinks.thumbnail} 
+                              alt={bookDetails.volumeInfo.title} 
+                              className='book-cover-details'
+                          />
+                      )}
+                      <button className='button-wishlist' onClick={() => addBookToWishlist(bookDetails.id)}>
+                          <img className='img-wishlist' src={wish} alt='Add wishlist'/>
+                          <div className='tooltip'>Want to read</div>
+                      </button>
+                      {wishlistStatus === 'success' && <p>Book added to wishlist!</p>}
+                      {wishlistStatus === 'error' && <p>Failed to add book to wishlist.</p>}
+                  </div>
+                  <div className='book-details-info'>
+                      <h2>{bookDetails.volumeInfo?.title || 'Title not available'}</h2>
+                      <h3>
+                          {bookDetails.volumeInfo?.authors ? (
+                              bookDetails.volumeInfo.authors.map((author, index) => (
+                                  <Link key={index} to={`/author/${author}`} className='author-link'>
+                                      {author}
+                                  </Link>
+                              ))
+                          ) : (
+                              'Author not available'
+                          )}
+                      </h3>
+                      <p>{bookDetails.volumeInfo?.pageCount ? `${bookDetails.volumeInfo.pageCount} Pages` : 'Page count not available'}</p>
+                      <p>{bookDetails.volumeInfo?.description || 'Description not available'}</p>
+                  </div>
+              </div>
+          ) : (
+              <div className='loading'>Book not found</div>
+          )
       )}
       <div className='container-title'>
-<h3 className='title'>More books by {bookDetails.volumeInfo?.authors[0]}</h3>
-    </div>
-    <div className='container-home-book'>
-              {booksAuthor.length ? (
-                booksAuthor.map(book => (
+          <h3 className='title'>More books by {bookDetails?.volumeInfo?.authors ? bookDetails.volumeInfo.authors[0] : 'Unknown author'}</h3>
+      </div>
+      <div className='container-home-book'>
+          {booksAuthor.length ? (
+              booksAuthor.map(book => (
                   <Link to={`/book/${book.id}`} key={book.id} className='book-item'>
-                    {book.volumeInfo.imageLinks && (
-                      <img 
-                        src={book.volumeInfo.imageLinks.thumbnail} 
-                        alt={book.volumeInfo.title} 
-                        className='book-cover'
-                      />
-                    )}
-                    <div className='book-info'>
-                      <h3>{book.volumeInfo.title}</h3>
-                      <p>{book.volumeInfo.authors?.join(', ')}</p>
-                      {book.volumeInfo.pageCount && (
-                        <p>{book.volumeInfo.pageCount} Pages</p>
+                      {book.volumeInfo?.imageLinks && (
+                          <img 
+                              src={book.volumeInfo.imageLinks.thumbnail} 
+                              alt={book.volumeInfo.title} 
+                              className='book-cover'
+                          />
                       )}
-                    </div>
+                      <div className='book-info'>
+                          <h3>{book.volumeInfo?.title || 'Title not available'}</h3>
+                          <p>{book.volumeInfo?.authors?.join(', ') || 'Author not available'}</p>
+                          {book.volumeInfo?.pageCount && (
+                              <p>{book.volumeInfo.pageCount} Pages</p>
+                          )}
+                      </div>
                   </Link>
-                ))
-              ) : (
-                <p>No books found</p>
-              )}
-            </div>
-    </div>
-  );
+              ))
+          ) : (
+              <p>No books found</p>
+          )}
+      </div>
+  </div>
+);
 }
-
-
-
 
 export default Book;
