@@ -88,11 +88,9 @@ function Dashboard() {
                                     {data.book_pages && (
                                         <p>{data.book_pages} Pages</p>
                                     )}
-                                      <button className='delete-button' onClick={() => handleDeleteBookFromWish(data.book_id)}> <img src={deleteIcon} alt='Croix pour delete un livre de la wishlist'/> </button> 
                                 </div>
                                 </Link>
-                              
-                               
+                                <button className='delete-button' onClick={() => handleDeleteBookFromWish(data.book_id)}> <img src={deleteIcon} alt='Croix pour delete un livre de la wishlist'/> </button> 
                             </div>
                         
                         ))
