@@ -3,12 +3,21 @@ const cors = require('cors');
 const mysql = require('mysql');
 const admin = require('firebase-admin');
 
+
 require ('dotenv').config();
 
 const app = express();
 
 app.use (cors());
 app.use(express.json());
+
+// Initialiser Firebase Admin
+const serviceAccount = require('./bookbox-9f0ec-firebase-adminsdk-tk269-a343c479a7.json'); // Chemin vers votre fichier JSON
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+  });
+  
 
 const db = mysql.createConnection({
     host: process.env.DB_HOST,
@@ -27,17 +36,17 @@ app.get('/', (req, res) => {
 });
 
 
-
-// Middleware pour vérifier les jetons Firebase
+// Middleware pour vérifier le token d'authentification
 const authenticate = async (req, res, next) => {
     const idToken = req.headers.authorization?.split('Bearer ')[1];
+    console.log('Authorization header:', req.headers.authorization); // Ajoutez ce log pour vérifier
     if (!idToken) {
       return res.status(401).send('Unauthorized');
     }
   
     try {
       const decodedToken = await admin.auth().verifyIdToken(idToken);
-      req.user = decodedToken; // Stocker les informations de l'utilisateur décodé dans la requête
+      req.user = decodedToken;
       next();
     } catch (error) {
       console.error('Error verifying token:', error);
@@ -133,15 +142,16 @@ app.post('/api/wishlist', (req, res) => {
     });
 });
 
-app.get('/dashboard', authenticate, (req, res) => {
-    const { user_id } = req.params;
+app.get('/dashboard/:id', authenticate, (req, res) => {
+    const { id } = req.params;
+    console.log(`ID: ${id}`);
 
-    if (!user_id) {
+    if (!id) {
         return res.status(400).json({ error: 'Missing required fields' });
     }
 
     const sql = 'SELECT * FROM wishlist WHERE user_id = ?';
-    db.query(sql, [user_id], (err, result) => {
+    db.query(sql, [id], (err, result) => {
         if (err) {
             console.error('Error fetching wishlist:', err);
             return res.status(500).json({ error: 'Database error' });

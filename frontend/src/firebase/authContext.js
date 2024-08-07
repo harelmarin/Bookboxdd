@@ -7,7 +7,8 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [userId, setUserId] = useState(null); // Pour stocker l'`user_id`
+  const [userId, setUserId] = useState(null);
+
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -19,12 +20,10 @@ export const AuthProvider = ({ children }) => {
               email: user.email,
               name: user.displayName
             });
-
-            // Afficher l'ID utilisateur pour le débogage
-            console.log('Response from server:', response.data);
-
             setUser(user);
-            setUserId(response.data.user_id); // Stocker l'`user_id`
+          setUserId(response.data.user_id); // Stocker l'`user_id`
+
+            console.log('Response from server:', response.data)
           } catch (error) {
             console.error('Error creating or updating user:', error);
           }

@@ -2,29 +2,43 @@
 import '../App.css';
 import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import { AuthContext } from '../firebase/authContext';
 
 import { useParams } from 'react-router-dom';
 
 function Dashboard() {
 
-    const { userId } = useParams();
+    const { id} = useParams();
+    const { user} = useContext(AuthContext);
+
 
     const [wishlist, setWishlist] = useState([]);
     const [loading, setLoading] = useState(true); 
 
     useEffect(() => {
-        if (userId) {
-            axios.get(`http://localhost:8001/dashboard/${userId}`)
+        if (id) {
+            user.getIdToken().then(token => {
+                console.log(token);
+                axios.get(`http://localhost:8001/dashboard/${id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}` // Incluez le token d'authentification
+                    }
+                })
                 .then(response => {
                     setWishlist(response.data);
+                    console.log('Fetched wishlist:', response.data);
                     setLoading(false);
                 })
                 .catch(error => {
                     console.error('Error fetching wishlist:', error);
                     setLoading(false);
                 });
+            }).catch(error => {
+                console.error('Error getting token:', error);
+                setLoading(false);
+            });
         }
-    }, [userId]);
+    }, [id, user]);
 
     return (
         <div className='container-search'>
