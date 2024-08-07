@@ -90,7 +90,7 @@ const addBookToWishlist = async (bookId) => {
         alert('Book added to wishlist');
     } catch (error) {
         console.error('Error adding book to wishlist:', error);
-        alert('Failed to add book to wishlist');
+        alert('You need to be logged in to add books to your wishlist');
     }
 };
 

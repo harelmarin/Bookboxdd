@@ -420,12 +420,13 @@ body {
   padding: 0;
   cursor: pointer;
   outline: none;
-  position: relative; /* Nécessaire pour positionner le tooltip */
+  position: relative;
+  margin-top: 1vh;
 }
 
 .img-wishlist {
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   cursor: pointer;
   opacity: 0.8;
   transform: 0.5s;

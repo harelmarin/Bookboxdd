@@ -9,6 +9,7 @@ import Search from './components/search';
 import Book from './components/book';
 import Author from './components/author';
 import Error from './components/error';
+import Dashboard from './components/dashboard';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
         <Route path='/book/:id' element={<Book />} />
         <Route path='/author/:id' element={<Author />} />
         <Route path='*' element={<Error />} />
+        <Route path='/dashboard/:userId' element={<Dashboard />} />
       </Routes>
       </BrowserRouter>
       

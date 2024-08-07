@@ -113,6 +113,23 @@ app.post('/api/wishlist', (req, res) => {
     });
 });
 
+app.get ('/dashboard/:id'), (req, res) => {
+    const { user_id } = req.params;
+
+    if (!user_id) {
+        return res.status(400).json({ error: 'Missing required fields' });
+    }
+
+    const sql = 'SELECT * FROM wishlist WHERE user_id = ?';
+    db.query(sql, [user_id], (err, result) => {
+        if (err) {
+            console.error('Error fetching wishlist:', err);
+            return res.status(500).json({ error: 'Database error' });
+        }
+        res.status(200).json(result);
+    });
+}
+
 
 app.listen(8001, () => {
 

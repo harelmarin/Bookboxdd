@@ -4,6 +4,7 @@ import '../App.css';
 import { AuthContext } from '../firebase/authContext'; // Importer le contexte
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import logIcon from '../assets/img/human.svg';
 import searchIcon from '../assets/img/search.svg';
@@ -45,7 +46,7 @@ function Header() {
          <div className='profile-container'>
          {user.photoURL && <img src={user.photoURL} alt="Profile" className="profile-picture" />}
          <div className='signout-container'>
-         <a href='/'> <h3> Dashboard</h3></a>
+         <Link to={`/dashboard/${userId}`}> <h3> Dashboard</h3></Link>
          <button onClick={handleSignOut} className='signout-button'>
             <h3> Disconnect</h3>
   </button>
