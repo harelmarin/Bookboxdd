@@ -301,8 +301,8 @@ body {
 .container-search-book {
   margin-top: 1vh;
   display: flex;
-  justify-content: space-around;
-  flex-direction: row; 
+  justify-content: flex-start;
+  gap: 20px;
   width: 100%;
   flex-wrap: wrap;
 }
@@ -488,4 +488,27 @@ body {
   text-align: center;
   margin-top: 20vh;
   margin-bottom: 20vh;
+}
+
+
+/* DASHBOARD */
+
+.container-title-dashboard {
+  width: 98%;
+  margin-top: 4vh;
+}
+
+.title-dashboard {
+  font-family: 'Bold';
+  font-size: 40px;
+}
+
+.container-title-dash {
+  width: 98%;
+  margin-top: 10vh;
+}
+
+.container-title-dash h3 {
+  font-family: 'Bold';
+  font-size: 30px;
 }
