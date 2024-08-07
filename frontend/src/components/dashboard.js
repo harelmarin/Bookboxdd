@@ -5,6 +5,8 @@ import axios from 'axios';
 import { AuthContext } from '../firebase/authContext';
 import { Link } from 'react-router-dom';
 
+import deleteIcon from '../assets/img/delete.svg';
+
 import { useParams } from 'react-router-dom';
 
 function Dashboard() {
@@ -79,25 +81,26 @@ function Dashboard() {
                          
                             <div key={i} className='book-item'>
                                    <Link to={`/book/${data.book_id}`} key={data.book_id} className='book-item top'>
-                                <img src={data.book_image} alt={data.book_name} className='book-cover' />
+                                <img className='book-cover'src={data.book_image} alt={data.book_name}  />
                                 <div className='book-info'>
                                     <h3>{data.book_name}</h3>
                                     <p>{data.book_author}</p>
                                     {data.book_pages && (
                                         <p>{data.book_pages} Pages</p>
-                            
                                     )}
-                                  
-                                    
+                                      <button className='delete-button' onClick={() => handleDeleteBookFromWish(data.book_id)}> <img src={deleteIcon} alt='Croix pour delete un livre de la wishlist'/> </button> 
                                 </div>
                                 </Link>
-                                <button className='delete-button' onClick={() => handleDeleteBookFromWish(data.book_id)}> delete </button>
+                              
                                
                             </div>
-                          
+                        
                         ))
                     ) : (
-                        <p>No books in your wishlist</p>
+                        <div className='nobook-container'>
+                        <p className='nobook'> Wich books do you want to read ? </p>
+                        <a href='/' className='button-begin-dashboard'>Get started  </a>
+                        </div>
                     )}
                 </div>
             )}

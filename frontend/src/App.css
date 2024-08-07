@@ -255,13 +255,11 @@ body {
     border-radius: 5px;
     overflow: hidden;
 }
-.book-item:hover {
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
 .book-item:hover img {
     opacity: 0.2;
 
 }
+
 .book-item:hover .book-info {
     display: block;
 }
@@ -513,15 +511,72 @@ body {
   font-size: 30px;
 }
 
+.delete-button img {
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+  opacity: 1 !important;
+  z-index: 2;
+
+}
+
+.delete-button:hover img {
+  opacity: 1;
+  content: url('../src/assets/img/deletehover.svg');
+}
+
 .delete-button {
-  width: 40px;
-  height: 40px;
+  margin-top: 15vh;
+  width: 30px;
+  height: 30px;
   background: none;
   border: none;
   padding: 0;
   cursor: pointer;
   outline: none;
-  position: relative;
-  margin-top: 1vh;
-  z-index: 1;
+  z-index: 2;
+}
+
+.nobook-container {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.nobook-container p {
+  font-size: 20px;
+  font-family: 'Bold';
+  text-align: center;
+}
+
+
+.button-begin-dashboard {
+  margin-top: 3vh;
+  width: 200px;
+  height: 60px;
+  border-radius: 5px;
+  cursor: pointer;
+  color: rgb(130, 178, 221) !important;
+  background-color: #FEFEFE;
+  border: 4px solid rgb(130, 178, 221);
+  font-size: 20px;
+  font-family: 'Bold';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+
+
+.button-begin-dashboard:hover {
+  background-color: rgb(130, 178, 221);
+  color: #FEFEFE !important;
+}
+
+.button-begin-dashboard a {
+  text-decoration: none;
+  color: rgb(130, 178, 221);
 }
