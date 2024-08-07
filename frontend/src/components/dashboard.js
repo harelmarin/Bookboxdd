@@ -65,12 +65,7 @@ function Dashboard() {
         <div className='container-search'>
             <div className='container-begin-home'>
      <h2>Track <span className='blue'>books</span> you want to read</h2>
-      <h2>Rate <span className='blue'>those</span> you have read</h2>
       </div>
-
-            <div className='container-title-dash'>
-                <h3> Want to read </h3>
-            </div>
             {loading ? (
                 <div className='loading'>Loading...</div>
             ) : (
@@ -88,6 +83,7 @@ function Dashboard() {
                                     {data.book_pages && (
                                         <p>{data.book_pages} Pages</p>
                                     )}
+                                    
                                 </div>
                                 </Link>
                                 <button className='delete-button' onClick={() => handleDeleteBookFromWish(data.book_id)}> <img src={deleteIcon} alt='Croix pour delete un livre de la wishlist'/> </button> 

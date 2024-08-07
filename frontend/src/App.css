@@ -246,7 +246,6 @@ body {
 
 .book-item {
     display: flex;
-    align-items: center;
     flex-direction: column;
     width: 180px;
     height: auto;
