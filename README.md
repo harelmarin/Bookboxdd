@@ -1,6 +1,6 @@
 # Google Books Application
 
-Application built with React for the frontend and Node.js with Express and MySQL for the backend. This project is intended as a practice exercise to demonstrate basic API utilisations with Database and Sign in with FireBase
+Application built with React for the frontend and Node.js with Express and MySQL for the backend. This project is intended as a practice exercise to demonstrate basic API utilisation with Database to add in wishlist the book you want to read (Sign up with firebase)
 ---
 
 ## Table of Contents
@@ -17,7 +17,7 @@ Application built with React for the frontend and Node.js with Express and MySQL
 - Consult books 
 - Search all the books you want ( Google books api )
 - Sign in with Google ( Firebase )
-- Add your favorite book
+- Add book in wishlist 
 - MySQL database for data storage
 
 ---
@@ -70,11 +70,12 @@ Application built with React for the frontend and Node.js with Express and MySQL
 
 ---
 
-
-
----
-
 ## API Endpoints 
+
+- POST /api/users => create user with id, mail and name 
+- POST /api/wishlist => Add book in the user's wishlist
+- GET /dashboard/:id => get the wishlist of the connected user 
+- DELETE /delete/:id/:bookid => Delete a book in the wishlist
 
 
 
